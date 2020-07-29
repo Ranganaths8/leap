@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivy-module version="2.0" xmlns:e="http://ant.apache.org/ivy/extra">
+	<info organisation="com.leap"
+		module="visualizer_2.13"
+		revision="0.1.0-SNAPSHOT"
+		status="integration"
+		publication="20200729113344"
+	>
+		<description>
+		visualizer
+		</description>
+	</info>
+	<configurations>
+		<conf name="compile" visibility="public" description=""/>
+		<conf name="runtime" visibility="public" description="" extends="compile"/>
+		<conf name="test" visibility="public" description="" extends="runtime"/>
+		<conf name="provided" visibility="public" description=""/>
+		<conf name="optional" visibility="public" description=""/>
+		<conf name="compile-internal" visibility="private" description="" extends="compile,optional,provided"/>
+		<conf name="runtime-internal" visibility="private" description="" extends="runtime,optional"/>
+		<conf name="test-internal" visibility="private" description="" extends="test,optional,provided"/>
+		<conf name="plugin" visibility="private" description=""/>
+		<conf name="pom" visibility="public" description=""/>
+		<conf name="scala-tool" visibility="private" description=""/>
+	</configurations>
+	<publications>
+		<artifact name="visualizer_2.13" type="pom" ext="pom" conf="pom"/>
+		<artifact name="visualizer_2.13" type="jar" ext="jar" conf="compile"/>
+		<artifact name="visualizer_2.13" type="src" ext="jar" conf="compile" e:classifier="sources"/>
+		<artifact name="visualizer_2.13" type="doc" ext="jar" conf="compile" e:classifier="javadoc"/>
+	</publications>
+	<dependencies>
+		<dependency org="org.scala-lang" name="scala-compiler" rev="2.13.2" conf="scala-tool->default,optional(default)"/>
+		<dependency org="org.scala-lang" name="scala-library" rev="2.13.2" conf="scala-tool->default,optional(default);compile->default(compile)"/>
+		<dependency org="com.leap" name="cluster_2.13" rev="0.1.0-SNAPSHOT" conf="compile->default(compile)"/>
+		<dependency org="ch.qos.logback" name="logback-classic" rev="1.2.3" conf="compile->default(compile)"/>
+		<dependency org="net.logstash.logback" name="logstash-logback-encoder" rev="4.11" conf="compile->default(compile)"/>
+		<dependency org="com.typesafe.scala-logging" name="scala-logging_2.13" rev="3.9.2" conf="compile->default(compile)"/>
+		<dependency org="org.slf4j" name="slf4j-log4j12" rev="1.7.30" conf="compile->default(compile)"/>
+		<dependency org="org.slf4j" name="slf4j-api" rev="1.7.30" conf="compile->default(compile)"/>
+		<dependency org="com.typesafe" name="config" rev="1.3.1" conf="compile->default(compile)"/>
+		<dependency org="org.scalatest" name="scalatest_2.13" rev="3.1.1" conf="test->default(compile)"/>
+		<dependency org="com.typesafe.akka" name="akka-actor-typed_2.13" rev="2.6.5" conf="compile->default(compile)"/>
+		<dependency org="com.typesafe.akka" name="akka-cluster-typed_2.13" rev="2.6.5" conf="compile->default(compile)"/>
+		<dependency org="com.typesafe.akka" name="akka-serialization-jackson_2.13" rev="2.6.5" conf="compile->default(compile)"/>
+		<dependency org="io.dropwizard.metrics" name="metrics-core" rev="4.1.11" conf="compile->default(compile)"/>
+		<dependency org="io.dropwizard.metrics" name="metrics-jvm" rev="4.1.11" conf="compile->default(compile)"/>
+		<dependency org="com.lightbend.akka.management" name="akka-management_2.13" rev="1.0.8" conf="compile->default(compile)"/>
+		<dependency org="com.typesafe.akka" name="akka-stream_2.13" rev="2.6.5" conf="compile->default(compile)"/>
+		<dependency org="com.typesafe.akka" name="akka-http_2.13" rev="10.1.12" conf="compile->default(compile)"/>
+		<dependency org="com.lightbend.akka.management" name="akka-management-cluster-http_2.13" rev="1.0.8" conf="compile->default(compile)"/>
+		<dependency org="com.typesafe.akka" name="akka-persistence_2.13" rev="2.6.5" conf="compile->default(compile)"/>
+		<dependency org="com.typesafe.akka" name="akka-cluster-sharding_2.13" rev="2.6.5" conf="compile->default(compile)"/>
+		<dependency org="com.typesafe.akka" name="akka-protobuf_2.13" rev="2.6.5" conf="compile->default(compile)"/>
+		<dependency org="com.typesafe.akka" name="akka-http-spray-json_2.13" rev="10.1.12" conf="compile->default(compile)"/>
+	</dependencies>
+</ivy-module>

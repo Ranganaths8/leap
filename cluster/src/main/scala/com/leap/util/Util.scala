@@ -4,6 +4,9 @@ import java.io.{BufferedReader, File, FileInputStream, InputStreamReader}
 import java.net.{ServerSocket, URI}
 import java.util.concurrent.ThreadLocalRandom
 
+import com.leap.cluster.AppJar
+import com.leap.jarstore.JarStoreClient
+import com.leap.transport.HostPort
 import com.typesafe.config.{Config, ConfigFactory}
 
 import scala.sys.process.Process
@@ -25,7 +28,7 @@ object Util {
   }
 
   def version: String = {
-    val home = System.getProperty(Constants.GEARPUMP_HOME)
+    val home = System.getProperty(Constants.LEAP_HOME)
     val version = Try {
       val versionFile = new FileInputStream(new File(home, "VERSION"))
       val reader = new BufferedReader(new InputStreamReader(versionFile))
@@ -43,7 +46,7 @@ object Util {
   }
 
   def startProcess(options: Array[String], classPath: Array[String], mainClass: String,
-      arguments: Array[String]): RichProcess = {
+      arguments: Array[String]): EnhancedProcess = {
     val java = System.getProperty("java.home") + "/bin/java"
 
     val command = List(java) ++ options ++
@@ -52,7 +55,7 @@ object Util {
       s"\n ${options.mkString(" ")}")
     val logger = new ProcessLogRedirector()
     val process = Process(command).run(logger)
-    new RichProcess(process, logger)
+    new EnhancedProcess(process, logger)
   }
 
   /**
@@ -116,7 +119,7 @@ object Util {
    *
    * filterOutOrigin(config, "reference.conf")
    */
-  import scala.collection.JavaConverters._
+  import scala.jdk.CollectionConverters._
   def filterOutOrigin(config: Config, originFile: String): Config = {
     config.entrySet().asScala.foldLeft(ConfigFactory.empty()) { (config, entry) =>
       val key = entry.getKey
@@ -139,17 +142,17 @@ object Util {
 
     import Constants._
 
-    val appMasterVMArgs = Try(conf.getString(GEARPUMP_APPMASTER_ARGS).split("\\s+")
+    val appMasterVMArgs = Try(conf.getString(LEAP_APPMASTER_ARGS).split("\\s+")
       .filter(_.nonEmpty)).toOption
-    val executorVMArgs = Try(conf.getString(GEARPUMP_EXECUTOR_ARGS).split("\\s+")
+    val executorVMArgs = Try(conf.getString(LEAP_EXECUTOR_ARGS).split("\\s+")
       .filter(_.nonEmpty)).toOption
 
     val appMasterClassPath = Try(
-      conf.getString(GEARPUMP_APPMASTER_EXTRA_CLASSPATH)
+      conf.getString(LEAP_APPMASTER_EXTRA_CLASSPATH)
         .split("[;:]").filter(_.nonEmpty)).toOption
 
     val executorClassPath = Try(
-      conf.getString(GEARPUMP_EXECUTOR_EXTRA_CLASSPATH)
+      conf.getString(LEAP_EXECUTOR_EXTRA_CLASSPATH)
         .split(File.pathSeparator).filter(_.nonEmpty)).toOption
 
     AppJvmSettings(
@@ -160,7 +163,7 @@ object Util {
   }
 
   def asSubDirOfGearpumpHome(dir: String): File = {
-    new File(System.getProperty(Constants.GEARPUMP_HOME), dir)
+    new File(System.getProperty(Constants.LEAP_HOME), dir)
 
   }
 }

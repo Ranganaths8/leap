@@ -73,6 +73,7 @@ lazy val dependencies =
     val akkaShardingVersion       = "2.6.5"
     val akkaProtoBufVersion       = "2.6.5"
     val sprayVersion              = "10.1.12"
+    val metricsVersion            = "4.1.11"
 
     val logback             = "ch.qos.logback"                 % "logback-classic"               % logbackV
     val logstash            = "net.logstash.logback"           % "logstash-logback-encoder"      % logstashV
@@ -92,7 +93,8 @@ lazy val dependencies =
     val akkaSharding        = "com.typesafe.akka"              %% "akka-cluster-sharding"        % akkaShardingVersion
     val akkaProdoBuf        = "com.typesafe.akka"              %% "akka-protobuf"                % akkaProtoBufVersion
     val spray               = "com.typesafe.akka"              %% "akka-http-spray-json"         % sprayVersion
-
+    val metrics             = "io.dropwizard.metrics"           % "metrics-core"                 % metricsVersion
+    val jvmMetrics          = "io.dropwizard.metrics"           % "metrics-jvm"                  % metricsVersion
 
 
 
@@ -109,6 +111,8 @@ lazy val clusterDependencies = Seq(
   dependencies.akkaTyped,
   dependencies.akkaCluster,
   dependencies.jsonSerializer,
+  dependencies.metrics,
+  dependencies.jvmMetrics
 )
 
 // SETTINGS
